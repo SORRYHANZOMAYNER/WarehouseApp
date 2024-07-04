@@ -25,18 +25,18 @@
       <Label fx:id="label1" layoutX="10.0" layoutY="14.0" prefHeight="22.0" prefWidth="130.0" text="Количество элементов" GridPane.columnIndex="1" />
       <TextField fx:id="name" GridPane.rowIndex="1" />
       <TextField fx:id="quantity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Button mnemonicParsing="false" onAction="#AddButton" prefHeight="39.0" prefWidth="134.0" text="Отправить на склад" GridPane.rowIndex="2" />
-      <Button layoutX="10.0" layoutY="95.0" mnemonicParsing="false" onAction="#AddShelfButton" prefHeight="39.0" prefWidth="134.0" text="Создать полку" GridPane.rowIndex="3" />
-      <Button layoutX="10.0" layoutY="95.0" mnemonicParsing="false" onAction="#AddDetailToAssemblyButton" prefHeight="56.0" prefWidth="160.0" text="Отправить детали на сборку" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <Button mnemonicParsing="false" onAction="#addButton" prefHeight="39.0" prefWidth="134.0" text="Отправить на склад" GridPane.rowIndex="2" />
+      <Button layoutX="10.0" layoutY="95.0" mnemonicParsing="false" onAction="#addShelfButton" prefHeight="39.0" prefWidth="134.0" text="Создать полку" GridPane.rowIndex="3" />
+      <Button layoutX="10.0" layoutY="95.0" mnemonicParsing="false" onAction="#addDetailToAssemblyButton" prefHeight="56.0" prefWidth="160.0" text="Отправить детали на сборку" GridPane.columnIndex="2" GridPane.rowIndex="2" />
       <TextField fx:id="customDetail" layoutX="143.0" layoutY="52.0" GridPane.columnIndex="2" GridPane.rowIndex="1" />
       <TableView fx:id="table" prefHeight="190.0" prefWidth="158.0" GridPane.rowIndex="4" GridPane.rowSpan="2" />
-      <Button layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#PrintAllDetailsButton" prefHeight="55.0" prefWidth="156.0" text="Детали на складе" GridPane.rowIndex="6" />
+      <Button layoutX="10.0" layoutY="108.0" mnemonicParsing="false" onAction="#printAllDetailsButton" prefHeight="55.0" prefWidth="156.0" text="Детали на складе" GridPane.rowIndex="6" />
       <TableView fx:id="tableConveyor" layoutX="10.0" layoutY="216.0" prefHeight="190.0" prefWidth="158.0" GridPane.columnIndex="1" GridPane.rowIndex="4" GridPane.rowSpan="2" />
-      <Button layoutX="10.0" layoutY="464.0" mnemonicParsing="false" onAction="#PrintDetailOnConveyor" prefHeight="55.0" prefWidth="156.0" text="Детали на конвейере" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+      <Button layoutX="10.0" layoutY="464.0" mnemonicParsing="false" onAction="#printDetailOnConveyor" prefHeight="55.0" prefWidth="156.0" text="Детали на конвейере" GridPane.columnIndex="1" GridPane.rowIndex="6" />
       <TableView fx:id="tableAssembly" layoutX="10.0" layoutY="216.0" prefHeight="190.0" prefWidth="158.0" GridPane.columnIndex="2" GridPane.rowIndex="4" GridPane.rowSpan="2" />
-      <Button layoutX="167.0" layoutY="464.0" mnemonicParsing="false" onAction="#PrintDetailOnAssembly" prefHeight="55.0" prefWidth="156.0" text="Детали на сборке" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-      <Button layoutX="324.0" layoutY="100.0" mnemonicParsing="false" onAction="#CreateCustomDetail" prefHeight="56.0" prefWidth="160.0" text="Создать деталь и отправить на склад" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-      <Button layoutX="481.0" layoutY="100.0" mnemonicParsing="false" onAction="#CheckFreePlaceButton" prefHeight="56.0" prefWidth="160.0" text="Проверить кол-во  свободных мест" GridPane.columnIndex="3" GridPane.rowIndex="6" />
+      <Button layoutX="167.0" layoutY="464.0" mnemonicParsing="false" onAction="#printDetailOnAssembly" prefHeight="55.0" prefWidth="156.0" text="Детали на сборке" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Button layoutX="324.0" layoutY="100.0" mnemonicParsing="false" onAction="#createCustomDetail" prefHeight="56.0" prefWidth="160.0" text="Создать деталь и отправить на склад" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+      <Button layoutX="481.0" layoutY="100.0" mnemonicParsing="false" onAction="#checkFreePlaceButton" prefHeight="56.0" prefWidth="160.0" text="Проверить кол-во  свободных мест" GridPane.columnIndex="3" GridPane.rowIndex="6" />
       <Label fx:id="freePlace" prefHeight="31.0" prefWidth="161.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
    </children>
 </GridPane>

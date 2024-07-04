@@ -1,6 +1,8 @@
 package com.example.demo1.module1.modules;
 
 
+
+
 public class Detail {
 
     private long detailId;

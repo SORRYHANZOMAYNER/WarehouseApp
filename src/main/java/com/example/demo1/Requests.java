@@ -1,19 +1,14 @@
 package com.example.demo1;
 
-import com.example.demo1.module1.DTO.DetailDTO;
-import com.example.demo1.module1.DTO.ShelfDTO;
 import com.example.demo1.module1.modules.Detail;
 import com.example.demo1.module1.modules.Shelf;
-import com.example.demo1.storagePlaces.Assembly;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Objects;
 
@@ -82,19 +77,19 @@ public class Requests {
     }
     public static void addNewShelfRequest(){
         Shelf s1 = new Shelf();
-        ShelfDTO shelfDTO1 = ShelfDTO.toDTO(s1);
         Client client = ClientBuilder.newClient();
         client.register(JacksonJsonProvider.class);
         Response response = client.target(SERVER_URL + "/shelf")
                 .request(MediaType.APPLICATION_JSON)
-                .post(Entity.entity(shelfDTO1, MediaType.APPLICATION_JSON));
+                .post(Entity.entity(s1, MediaType.APPLICATION_JSON));
         System.out.println(response);
     }
     public static int checkFreePlaceRequest(Client client){
         Response response1 = Requests.universalGetRequest(client);
-        List<DetailDTO> deliver = response1.readEntity(new GenericType<List<DetailDTO>>() {});
+        List<Detail> deliver = response1.readEntity(new GenericType<>() {
+        });
         int freePlace = 0;
-        for(DetailDTO detailDTO1:deliver){
+        for(Detail detailDTO1:deliver){
             if(detailDTO1.getDetailName() == null){
                 freePlace +=1;
             }
@@ -102,10 +97,10 @@ public class Requests {
         System.out.println("На складе " + freePlace + " свободных мест");
         return freePlace;
     }
-    public static void updateDetailByIdOrQuantityByName(Client client, String url, int cout, DetailDTO detailDTO){
+    public static void updateDetailByIdOrQuantityByName(Client client, String url, int cout, Detail detail){
         Response response = client.target(SERVER_URL + url + cout)
                 .request(MediaType.APPLICATION_JSON)
-                .put(Entity.entity(detailDTO, MediaType.APPLICATION_JSON));
+                .put(Entity.entity(detail, MediaType.APPLICATION_JSON));
         System.out.println(response);
     }
 }

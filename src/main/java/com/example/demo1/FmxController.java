@@ -1,27 +1,18 @@
 package com.example.demo1;
-import com.example.demo1.module1.DTO.DetailDTO;
 import com.example.demo1.storagePlaces.Conveyor;
 import com.example.demo1.storagePlaces.Assembly;
-import com.example.demo1.module1.DTO.ShelfDTO;
 import com.example.demo1.module1.modules.Detail;
-import com.example.demo1.module1.modules.Shelf;
 import com.example.demo1.storagePlaces.Queue;
-import com.example.demo1.storagePlaces.Storage;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
-
-import javax.swing.*;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.net.PortUnreachableException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,24 +34,31 @@ public class FmxController implements Initializable {
     @FXML
     public Label freePlace;
     public static boolean flag = true;
+    private final int CELLIMIT = 10;
     public static boolean flagStorageOrAssembly = true;
     public static Queue queue = new Queue();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-       CreateNewColumns(table);
-       CreateNewColumns(tableConveyor);
-       CreateNewColumns(tableAssembly);
+       createNewColumns(table);
+       createNewColumns(tableConveyor);
+       createNewColumns(tableAssembly);
     }
-    public void CreateCustomDetail(ActionEvent actionEvent) throws Exception {
+    public void createCustomDetail(ActionEvent actionEvent) throws Exception {
         Assembly.createCustomDetail(customDetail.getText());
     }
-    public void AddButton(ActionEvent actionEvent) {
+    public void addButton(ActionEvent actionEvent) {
         Detail detail = new Detail();
         detail.setDetailName(String.valueOf(name.getText()));
         detail.setQuantity(Integer.parseInt(quantity.getText()));
-        queue.enQueue(detail);
+        if(Integer.parseInt(quantity.getText())>CELLIMIT){
+            System.out.println("Деталей в данной партии слишком много. Она будет разбита в несколько ячеек");
+            correctDetailQuantity(detail,CELLIMIT);
+        }
+        else{
+            queue.enQueue(detail);
+        }
         while(!queue.isEmpty()){
-            if(flag==true){
+            if(flag){
                 flag = false;
                 Detail detail1 = queue.peak();
                 queue.deQueue();
@@ -72,24 +70,24 @@ public class FmxController implements Initializable {
         }
     }
 
-    public void AddShelfButton(ActionEvent actionEvent) {
+    public void addShelfButton(ActionEvent actionEvent) {
         Requests.addNewShelfRequest();
     }
-    public void PrintAllDetailsButton(ActionEvent actionEvent) {
+    public void printAllDetailsButton(ActionEvent actionEvent) {
         table.getItems().clear();
         Client client = ClientBuilder.newClient();
         client.register(JacksonJsonProvider.class);
         Response response1 = Requests.universalGetRequest(client);
-        List<DetailDTO> deliver = response1.readEntity(new GenericType<List<DetailDTO>>() {});
+        List<Detail> deliver = response1.readEntity(new GenericType<>() {});
         List<Detail> details = new ArrayList<>();
-        for(DetailDTO detailDTO:deliver){
-            if(detailDTO.getDetailName()!=null){
-                details.add(Storage.DetailToEntity(detailDTO));
+        for(Detail detail:deliver){
+            if(detail.getDetailName()!=null){
+                details.add(detail);
             }
         }
         table.getItems().addAll(details);
     }
-    public static void CreateNewColumns(TableView tableView){
+    public static void createNewColumns(TableView tableView){
         TableColumn<Detail, String> nameColumn = new TableColumn<>("Названия");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("detailName"));
         tableView.getColumns().add(nameColumn);
@@ -99,17 +97,17 @@ public class FmxController implements Initializable {
         tableView.getColumns().add(quantityColumn);
     }
 
-    public void PrintDetailOnConveyor(ActionEvent actionEvent) {
+    public void printDetailOnConveyor(ActionEvent actionEvent) {
         tableConveyor.getItems().clear();
         tableConveyor.getItems().addAll(Conveyor.detailsOnConveyor);
     }
 
-    public void PrintDetailOnAssembly(ActionEvent actionEvent) {
+    public void printDetailOnAssembly(ActionEvent actionEvent) {
         tableAssembly.getItems().clear();
         tableAssembly.getItems().addAll(Assembly.detailsOnAssembly);
     }
 
-    public void AddDetailToAssemblyButton(ActionEvent actionEvent) throws Exception {
+    public void addDetailToAssemblyButton(ActionEvent actionEvent) throws Exception {
         Client client = ClientBuilder.newClient();
         client.register(JacksonJsonProvider.class);
         String requirementDetail = customDetail.getText();
@@ -122,7 +120,7 @@ public class FmxController implements Initializable {
                     queue.enQueue(new Detail("гайка",1));
                     queue.enQueue(new Detail("шестерня",2));
                     while(!queue.isEmpty()){
-                        if(flag==true){
+                        if(flag){
                             flag = false;
                             flagStorageOrAssembly = false;
                             Detail detail1 = queue.peak();
@@ -137,9 +135,20 @@ public class FmxController implements Initializable {
                 break;
         }
     }
+    public void correctDetailQuantity(Detail detail,int quantity){
+        int cout = detail.getQuantity();
+        while(cout>=quantity){
+            Detail detailNew = new Detail();
+            detailNew.setQuantity(quantity);
+            detailNew.setDetailName(detail.getDetailName());
+            queue.enQueue(detailNew);
+            cout -= quantity;
+        }
+        Detail detailWithRemainingQuantity = new Detail(detail.getDetailName(),cout);
+        queue.enQueue(detailWithRemainingQuantity);
+    }
 
-    public void CheckFreePlaceButton(ActionEvent actionEvent) {
-        //fr = new Label();
+    public void checkFreePlaceButton(ActionEvent actionEvent) {
         Client client = ClientBuilder.newClient();
         client.register(JacksonJsonProvider.class);
         int places = Requests.checkFreePlaceRequest(client);

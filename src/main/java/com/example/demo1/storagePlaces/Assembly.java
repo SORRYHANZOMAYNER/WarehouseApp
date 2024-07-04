@@ -20,7 +20,6 @@ public class Assembly {
     public static List<Detail> detailsOnAssembly = new ArrayList<>();
     public Assembly(){
     }
-    // рецепт custom_detail_1 - detail_1 1, detail2 2
     public static void createCustomDetail(String order){
         switch (order){
             case "вал":
@@ -37,7 +36,7 @@ public class Assembly {
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                System.out.println("Деталь с названием: " + customDetail.getDetailName() + "закончила создаваться и начинает двигаться по конвейеру");
+                System.out.println("Деталь с названием: " + customDetail.getDetailName() + " закончила создаваться и начинает двигаться по конвейеру");
                 Conveyor c = new Conveyor(customDetail);
                 Thread tr = new Thread(c);
                 tr.start();

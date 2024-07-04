@@ -1,6 +1,5 @@
 package com.example.demo1.storagePlaces;
 
-import com.example.demo1.module1.DTO.*;
 import com.example.demo1.module1.modules.*;
 
 public class Queue {
@@ -8,7 +7,7 @@ public class Queue {
     Detail items[] = new Detail[queueLength];
     int front = -1;
     int back = -1;
-    private final Object lock = new Object(); // Объект для синхронизации
+    private final Object lock = new Object();
 
     synchronized boolean isFull() {
         if (back == queueLength - 1) {
@@ -30,7 +29,7 @@ public class Queue {
         synchronized (lock) {
             while (isFull()) {
                 try {
-                    lock.wait(); // Ждем, пока очередь не освободится
+                    lock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -41,7 +40,7 @@ public class Queue {
             } else {
                 back++;
                 items[back] = itemValue;
-                lock.notify(); // Уведомляем ожидающие потоки
+                lock.notify();
             }
         }
     }
@@ -50,7 +49,7 @@ public class Queue {
         synchronized (lock) {
             while (isEmpty()) {
                 try {
-                    lock.wait(); // Ждем, пока очередь не заполнится
+                    lock.wait();
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -59,21 +58,10 @@ public class Queue {
                 front = back = -1;
             } else {
                 front++;
-                lock.notify(); // Уведомляем ожидающие потоки
+                lock.notify();
             }
         }
     }
-    synchronized void checkDeliveredDetails() {
-        int i;
-        if (isEmpty()) {
-            System.out.println("Queue is empty");
-        } else {
-            for (i = front; i <= back; i++) {
-                System.out.println(items[i]);
-            }
-        }
-    }
-
     public synchronized Detail peak() {
         return items[front];
     }
