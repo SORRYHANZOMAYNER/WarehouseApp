@@ -1,4 +1,4 @@
-package com.example.demo1.module1.modules;
+package com.demo1.module1.modules;
 
 
 import java.util.ArrayList;

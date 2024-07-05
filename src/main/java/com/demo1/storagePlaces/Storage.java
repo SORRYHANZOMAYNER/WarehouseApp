@@ -1,8 +1,9 @@
-package com.example.demo1.storagePlaces;
+package com.demo1.storagePlaces;
 
-import com.example.demo1.FmxController;
-import com.example.demo1.Requests;
-import com.example.demo1.module1.modules.*;
+import com.demo1.FmxController;
+import com.demo1.Requests;
+import com.demo1.module1.modules.Detail;
+import com.demo1.module1.modules.*;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

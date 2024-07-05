@@ -1,8 +1,8 @@
-package com.example.demo1;
-import com.example.demo1.storagePlaces.Conveyor;
-import com.example.demo1.storagePlaces.Assembly;
-import com.example.demo1.module1.modules.Detail;
-import com.example.demo1.storagePlaces.Queue;
+package com.demo1;
+import com.demo1.storagePlaces.Conveyor;
+import com.demo1.storagePlaces.Queue;
+import com.demo1.storagePlaces.Assembly;
+import com.demo1.module1.modules.Detail;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -34,7 +34,6 @@ public class FmxController implements Initializable {
     @FXML
     public Label freePlace;
     public static boolean flag = true;
-    private final int CELLIMIT = 10;
     public static boolean flagStorageOrAssembly = true;
     public static Queue queue = new Queue();
     @Override
@@ -43,20 +42,14 @@ public class FmxController implements Initializable {
        createNewColumns(tableConveyor);
        createNewColumns(tableAssembly);
     }
-    public void createCustomDetail(ActionEvent actionEvent) throws Exception {
+    public void createCustomDetail(ActionEvent actionEvent) {
         Assembly.createCustomDetail(customDetail.getText());
     }
     public void addButton(ActionEvent actionEvent) {
         Detail detail = new Detail();
         detail.setDetailName(String.valueOf(name.getText()));
         detail.setQuantity(Integer.parseInt(quantity.getText()));
-        if(Integer.parseInt(quantity.getText())>CELLIMIT){
-            System.out.println("Деталей в данной партии слишком много. Она будет разбита в несколько ячеек");
-            correctDetailQuantity(detail,CELLIMIT);
-        }
-        else{
-            queue.enQueue(detail);
-        }
+        queue.enQueue(detail);
         while(!queue.isEmpty()){
             if(flag){
                 flag = false;
@@ -135,19 +128,6 @@ public class FmxController implements Initializable {
                 break;
         }
     }
-    public void correctDetailQuantity(Detail detail,int quantity){
-        int cout = detail.getQuantity();
-        while(cout>=quantity){
-            Detail detailNew = new Detail();
-            detailNew.setQuantity(quantity);
-            detailNew.setDetailName(detail.getDetailName());
-            queue.enQueue(detailNew);
-            cout -= quantity;
-        }
-        Detail detailWithRemainingQuantity = new Detail(detail.getDetailName(),cout);
-        queue.enQueue(detailWithRemainingQuantity);
-    }
-
     public void checkFreePlaceButton(ActionEvent actionEvent) {
         Client client = ClientBuilder.newClient();
         client.register(JacksonJsonProvider.class);

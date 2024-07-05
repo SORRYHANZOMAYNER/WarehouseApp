@@ -1,18 +1,8 @@
-package com.example.demo1.storagePlaces;
+package com.demo1.storagePlaces;
 
-import com.example.demo1.FmxController;
-import com.example.demo1.Requests;
-import com.example.demo1.module1.exceptions.ZeroDetailException;
-import com.example.demo1.storagePlaces.Conveyor;
-import com.example.demo1.module1.modules.*;
-import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
+import com.demo1.module1.modules.Detail;
+import com.demo1.module1.modules.*;
 
-import javax.swing.*;
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 import java.util.*;
 import java.util.Timer;
 

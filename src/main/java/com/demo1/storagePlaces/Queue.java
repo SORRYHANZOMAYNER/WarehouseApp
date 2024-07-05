@@ -1,6 +1,7 @@
-package com.example.demo1.storagePlaces;
+package com.demo1.storagePlaces;
 
-import com.example.demo1.module1.modules.*;
+import com.demo1.module1.modules.Detail;
+import com.demo1.module1.modules.*;
 
 public class Queue {
     int queueLength = 4;

@@ -1,7 +1,7 @@
-package com.example.demo1;
+package com.demo1;
 
-import com.example.demo1.module1.modules.Detail;
-import com.example.demo1.module1.modules.Shelf;
+import com.demo1.module1.modules.Detail;
+import com.demo1.module1.modules.Shelf;
 import org.glassfish.jersey.jackson.internal.jackson.jaxrs.json.JacksonJsonProvider;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;

@@ -1,8 +1,9 @@
-package com.example.demo1.storagePlaces;
+package com.demo1.storagePlaces;
 
-import com.example.demo1.FmxController;
-import com.example.demo1.module1.exceptions.ZeroDetailException;
-import com.example.demo1.module1.modules.*;
+import com.demo1.FmxController;
+import com.demo1.module1.exceptions.ZeroDetailException;
+import com.demo1.module1.modules.Detail;
+import com.demo1.module1.modules.*;
 
 import java.util.ArrayList;
 import java.util.List;
