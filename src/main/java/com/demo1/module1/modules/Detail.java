@@ -1,8 +1,4 @@
 package com.demo1.module1.modules;
-
-
-
-
 public class Detail {
 
     private long detailId;
@@ -30,7 +26,6 @@ public class Detail {
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
-
     public Detail(){
 
     }
@@ -38,6 +33,4 @@ public class Detail {
         this.detailName = name;
         this.quantity = quantity;
     }
-
-
 }

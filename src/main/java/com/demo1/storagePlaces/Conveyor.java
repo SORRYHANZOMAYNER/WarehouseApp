@@ -12,23 +12,34 @@ import java.util.TimerTask;
 
 public class Conveyor extends Thread {
     private Detail detail;
+
     public Detail getDetail() {
         return detail;
     }
-    public void setDetail(Detail detail) {this.detail = detail;}
-    public Conveyor(Detail detail){
+
+    public void setDetail(Detail detail) {
         this.detail = detail;
     }
+
+    public Conveyor(Detail detail) {
+        this.detail = detail;
+    }
+
     public static List<Detail> detailsOnConveyor = new ArrayList<>();
+
     public void transferToStorage() throws ZeroDetailException {
         Thread thread = new Thread(() -> {
             Storage storage = new Storage();
             detailsOnConveyor.remove(detail);
             storage.receiveData(detail);
         });
-        if(this.getDetail().getQuantity()>0){ thread.start();}
-        else{throw new ZeroDetailException();}
+        if (this.getDetail().getQuantity() > 0) {
+            thread.start();
+        } else {
+            throw new ZeroDetailException();
+        }
     }
+
     public void assemblyTransfer() throws ZeroDetailException {
         Thread thread = new Thread(() -> {
             Assembly.detailsOnAssembly.add(detail);
@@ -36,10 +47,14 @@ public class Conveyor extends Thread {
             FmxController.flagStorageOrAssembly = true;
             FmxController.flag = true;
         });
-        if(this.getDetail().getQuantity()>0){ thread.start();}
-        else{throw new ZeroDetailException();}
+        if (this.getDetail().getQuantity() > 0) {
+            thread.start();
+        } else {
+            throw new ZeroDetailException();
+        }
     }
-    public void run(){
+
+    public void run() {
         Timer timer = new Timer();
         detailsOnConveyor.add(detail);
         timer.schedule(new TimerTask() {
@@ -47,10 +62,9 @@ public class Conveyor extends Thread {
             public void run() {
                 System.out.println("Деталь закончила двигаться по конвейеру");
                 try {
-                    if(FmxController.flagStorageOrAssembly){
+                    if (FmxController.flagStorageOrAssembly) {
                         transferToStorage();
-                    }
-                    else{
+                    } else {
                         assemblyTransfer();
                     }
                 } catch (ZeroDetailException e) {

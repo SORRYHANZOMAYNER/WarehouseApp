@@ -5,25 +5,17 @@ import com.demo1.module1.modules.*;
 
 public class Queue {
     int queueLength = 4;
-    Detail items[] = new Detail[queueLength];
+    Detail[] items = new Detail[queueLength];
     int front = -1;
     int back = -1;
     private final Object lock = new Object();
 
     synchronized boolean isFull() {
-        if (back == queueLength - 1) {
-            return true;
-        } else {
-            return false;
-        }
+        return back == queueLength - 1;
     }
 
     public synchronized boolean isEmpty() {
-        if (front == -1 && back == -1) {
-            return true;
-        } else {
-            return false;
-        }
+        return front == -1 && back == -1;
     }
 
     public synchronized void enQueue(Detail itemValue) {
@@ -63,6 +55,7 @@ public class Queue {
             }
         }
     }
+
     public synchronized Detail peak() {
         return items[front];
     }
